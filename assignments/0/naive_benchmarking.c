@@ -7,7 +7,7 @@ int main(int) {
   long int sum;
   float seconds;
 
-  const int iterations = 1E9;
+  const long int iterations = 1E9;
 
   for (long int ix = 0; ix < iterations; ++ix) {
     sum += ix;
