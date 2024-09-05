@@ -1,6 +1,6 @@
 .PHONY : all
 all : stack_allocation heap_allocation contiguous_memory fragmented_memory \
-write_matrix read_matrix parsing
+write_matrix read_matrix parsing naive_benchmarking
 
 stack_allocation : stack_allocation.c
 	gcc -o stack_allocation stack_allocation.c
@@ -23,3 +23,5 @@ read_matrix : read_matrix.c
 parsing : printargs.c
 	gcc -o printargs printargs.c
 
+naive_benchmarking : naive_benchmarking.c
+	gcc -o naive_benchmarking naive_benchmarking.c
