@@ -1,12 +1,10 @@
+#include "different_file_mul.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 void mul_cpx(double *a_re, double *a_im, double *b_re,
-  double *b_im, double *c_re, double *c_im) {
-  *a_re = *b_re * *c_re - *b_im * *c_im;
-  *a_im = *b_re * *c_im + *b_im * *c_re;
-}
+             double *b_im, double *c_re, double *c_im);
 
 int main(void) {
   struct timespec bench_start_time, bench_stop_time;
@@ -40,8 +38,8 @@ int main(void) {
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
     (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) / 1E6;
-  printf("First elements of as_re and as_im are: (%f, %f)\n", as_re[0], as_im[0]);
-  printf("Function in same file took %f seconds to run.\n", bench_diff_time);
+  printf("First element of as_re and as_im are: (%f, %f)\n", as_re[0], as_im[0]);
+  printf("Function in another file took %f seconds to run.\n", bench_diff_time);
   free(as_re);
   free(bs_re);
   free(cs_re);
