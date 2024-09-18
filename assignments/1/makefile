@@ -1,5 +1,5 @@
 .PHONY : all
-all : naive_benchmarking valgrind gdb same_file inline_manually different_file
+all : naive_benchmarking valgrind gdb same_file inline_manually different_file locality locality_reimplement
 
 naive_benchmarking : naive_benchmarking.c
 	gcc -S -fverbose-asm naive_benchmarking.c
@@ -28,4 +28,8 @@ different_file.o: different_file.c different_file_mul.h
 different_file_mul.o: different_file_mul.c different_file_mul.h
 	gcc -g -O2 -c different_file_mul.c
 
+locality : locality.c
+	gcc -g -O2 -o locality locality.c
 
+locality_reimplement : locality_reimplement.c
+	gcc -g -O2 -o locality_reimplement locality_reimplement.c

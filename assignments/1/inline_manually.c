@@ -3,6 +3,9 @@
 #include <time.h>
 
 
+// Runetime: 2.632s. Longer than if a function is used, unknown why.
+
+
 int main(void) {
   struct timespec bench_start_time, bench_stop_time;
   double bench_diff_time;
@@ -37,7 +40,7 @@ int main(void) {
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
     (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) / 1E6;
   printf("First elements of as_re and as_im are: (%f, %f)\n", as_re[0], as_im[0]);
-  printf("Function in same file took %f seconds to run.\n", bench_diff_time);
+  printf("Function inserted in loop took %f seconds to run.\n", bench_diff_time);
   free(as_re);
   free(bs_re);
   free(cs_re);

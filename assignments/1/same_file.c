@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Runtime: 2.089s. This is faster than inline manually, I wonder why?
+// ChatGPT claims this is because the compiler can optimize an inlined function
+// more aggressively than manually pasted code.
+
 void mul_cpx(double *a_re, double *a_im, double *b_re,
   double *b_im, double *c_re, double *c_im) {
   *a_re = *b_re * *c_re - *b_im * *c_im;
@@ -37,10 +41,12 @@ int main(void) {
       mul_cpx(&as_re[i], &as_im[i], &bs_re[i], &bs_re[i], &cs_re[i], &cs_im[i]);
     }
   }
+  int r = rand() / RAND_MAX * len;
+
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
     (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) / 1E6;
-  printf("First elements of as_re and as_im are: (%f, %f)\n", as_re[0], as_im[0]);
+  printf("Random element of as_re and as_im are: (%f, %f)\n", as_re[r], as_im[r]);
   printf("Function in same file took %f seconds to run.\n", bench_diff_time);
   free(as_re);
   free(bs_re);
