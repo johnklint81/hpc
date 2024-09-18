@@ -34,7 +34,7 @@ int main(void) {
   struct timespec bench_start_time, bench_stop_time;
   double bench_diff_time;
   const size_t size = 1000;
-  const size_t iterations = 10000;
+  const size_t iterations = 5000;
   double **matrix = malloc(size * sizeof(double*));
   double *rowSums = malloc(size * sizeof(double));
   double *colSums = malloc(size * sizeof(double));
@@ -62,7 +62,7 @@ int main(void) {
 
   clock_gettime(CLOCK_MONOTONIC, &bench_start_time);
   for (int i = 0; i < iterations; i++) {
-    col_sums(colSums, (const double**)matrix, size, size);
+    row_sums(colSums, (const double**)matrix, size, size);
   }
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
 
