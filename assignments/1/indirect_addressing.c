@@ -59,5 +59,9 @@ int main(void) {
   free(y);
 }
 
+// Laptop:
 // O0 flag: linear init takes 4.4 secs and sparse init takes 11.2 secs
 // O2 flag: linear init takes 1.7 secs and sparse init takes 6.0 secs
+// Desktop:
+// O0 flag: linear init takes 3.7 secs and sparse init 3.6 secs
+// O2 flag: linear init takes 0.86 secs and sparse init 1.6 secs
