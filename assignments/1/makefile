@@ -1,5 +1,6 @@
 .PHONY : all
-all : naive_benchmarking valgrind gdb same_file inline_manually different_file locality locality_reimplement
+all : naive_benchmarking valgrind gdb same_file inline_manually different_file \
+	locality locality_reimplement data_dependency indirect_addressing
 
 naive_benchmarking : naive_benchmarking.c
 	gcc -S -fverbose-asm naive_benchmarking.c
@@ -33,3 +34,11 @@ locality : locality.c
 
 locality_reimplement : locality_reimplement.c
 	gcc -g -O2 -o locality_reimplement locality_reimplement.c
+
+data_dependency : data_dependency.c
+	gcc -g -O0 -o data_dependencyO0 data_dependency.c
+	gcc -g -O2 -o data_dependencyO2 data_dependency.c
+
+indirect_addressing : indirect_addressing.c
+	gcc -g -O0 -o indirect_addressingO0 indirect_addressing.c
+	gcc -g -O2 -o indirect_addressingO2 indirect_addressing.c

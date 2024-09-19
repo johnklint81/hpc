@@ -52,7 +52,7 @@ int main(void) {
   }
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
 
-  int r0 = rand() / RAND_MAX * size;
+  int r0 = rand() % (size + 1);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
   (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) / 1E6;
   printf("Random element of rowSums: %f\n", rowSums[r0]);
@@ -64,7 +64,7 @@ int main(void) {
   }
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
 
-  r0 = rand() / RAND_MAX * size;
+  r0 = rand() % (size + 1);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
   (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) / 1E6;
   printf("Random element of colSums: %f\n", colSums[r0]);

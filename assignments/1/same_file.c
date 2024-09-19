@@ -41,7 +41,7 @@ int main(void) {
       mul_cpx(&as_re[i], &as_im[i], &bs_re[i], &bs_re[i], &cs_re[i], &cs_im[i]);
     }
   }
-  int r = rand() / RAND_MAX * len;
+  int r = rand() % (len + 1);
 
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) * 1000000 +
