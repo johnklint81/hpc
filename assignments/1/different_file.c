@@ -4,7 +4,7 @@
 #include <time.h>
 
 // Runtime: 7.641s. This is reasonable, given that there will be overhead when 
-// each call to the function incurrs overhead.
+// each call to the function incurs overhead.
 
 void mul_cpx(double *a_re, double *a_im, double *b_re,
              double *b_im, double *c_re, double *c_im);

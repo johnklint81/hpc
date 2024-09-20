@@ -23,10 +23,8 @@ void col_sums(
   size_t ncs)
 {
   for ( size_t ix = 0; ix < nrs; ++ix ) {
-    double sum = 0.;
     for ( size_t jx = 0; jx < ncs; ++jx )
-      sum += matrix[ix][jx];
-    sums[ix] = sum;
+      sums[jx] += matrix[ix][jx];
   }
 }
 
@@ -63,7 +61,7 @@ int main(void) {
 
   clock_gettime(CLOCK_MONOTONIC, &bench_start_time);
   for (int i = 0; i < iterations; i++) {
-    row_sums(colSums, (const double**)matrix, size, size);
+    col_sums(colSums, (const double**)matrix, size, size);
   }
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
 

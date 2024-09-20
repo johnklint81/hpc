@@ -11,9 +11,9 @@ int main(void) {
   int *data = malloc(n * sizeof(int));
 
   clock_gettime(CLOCK_MONOTONIC, &bench_start_time);
-  FILE *file = fopen("data.bin", "wrb");
+  FILE *file = fopen("data.bin", "wr");
   for (int i = 0; i < n; i++) {
-    fwrite(&i, sizeof(int), 1, file);
+    fwrite(&i, sizeof(int), 1, file);  // fwrite is faster and binary, fprint is slower
     fflush(file);
   }
   int i = 0;
@@ -21,7 +21,7 @@ int main(void) {
     i++;
   } 
   fclose(file);
-  
+ // --------------------------------------------- 
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) 
     * 1000000 + (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) 
@@ -33,8 +33,8 @@ int main(void) {
   for (int i = 0; i < n; i++) {
     data[i] = i;
   }
-  fwrite(&data, sizeof(int), sizeof(data), file);
-  fread(&data, sizeof(int), n, file);
+  fwrite(data, sizeof(int), sizeof(data), file);
+  fread(data, sizeof(int), n, file);
   clock_gettime(CLOCK_MONOTONIC, &bench_stop_time);
   bench_diff_time = (difftime(bench_stop_time.tv_sec, bench_start_time.tv_sec) 
     * 1000000 + (bench_stop_time.tv_nsec - bench_start_time.tv_nsec) / 1000) 

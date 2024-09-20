@@ -5,9 +5,9 @@
 
 int main(void) {
 
-  int *as;
+  int *as = 0 ;
   // When I comment out as below, the code still runs and print the sum, how?
-  as = (int*)malloc(10*sizeof(int));
+  //as = (int*)malloc(10*sizeof(int));
   int sum = 0;
 
   for (int ix = 0; ix < 10; ++ix) {
