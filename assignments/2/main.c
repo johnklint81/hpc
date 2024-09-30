@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define CHUNK_SIZE 10000
-#define DISTANCE_BINS 3464 // Max distance is sqrt( 3 * [10-(-10)]^2) = 34.641
+#define N_BINS 3465 // Max distance is sqrt( 3 * [10-(-10)]^2) = 34.641
 #define SCALE_FACTOR 1000
 #define PRECISION 100 // For fixed-point representation (2 decimal places) 
 
@@ -41,7 +41,7 @@ int read_data(const char *filename, Point *points) {
 
 void print_result(int *distance_count) {
   // Output results
-  for (int i = 0; i < DISTANCE_BINS; i++) {
+  for (int i = 0; i < N_BINS; i++) {
     if (distance_count[i] > 0) {
         printf("%05.2f %d\n", i / (float)PRECISION, distance_count[i]);
     }
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
   printf("Using %d thread(s).\n", actual_threads);
 
   Point points[CHUNK_SIZE];
-  int distance_count[DISTANCE_BINS] = {0};
+  int distance_count[N_BINS] = {0};
   int num_points = read_data("sample.txt", points);
   printf("Number of points read: %d\n", num_points);
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < num_points; i++) {
     for (int j = i + 1; j < num_points; j++) {  
       int dist = get_distance(points[i], points[j]);
-      if (dist < DISTANCE_BINS) {
+      if (dist < N_BINS) {
         // This is a thread safe update of the distance_count
         #pragma omp atomic
         distance_count[dist]++;
