@@ -2,4 +2,4 @@
 all : main
 
 main : main.c
-	gcc -o main main.c
+	gcc -O2 -fopenmp -o main main.c -lm
