@@ -1,5 +1,8 @@
 .PHONY : all
-all : main
+all : distances
 
-main : main.c
-	gcc -O2 -fopenmp -o main main.c -lm
+distances: distances.c
+	gcc -O2 -fopenmp -o distances distances.c -lm
+
+clean:
+	rm -f *.o distances
