@@ -42,7 +42,6 @@ void print_result(int *distance_count) {
 int main(int argc, char *argv[]) {
     int num_threads = 1;
     num_threads = atoi(argv[1] + 2); // pointer to *argv + 2, skip -t
-
     omp_set_num_threads(num_threads);
 
     Point points[CHUNK_SIZE];
@@ -56,7 +55,7 @@ int main(int argc, char *argv[]) {
         // Local distance count for each thread
         int local_distance_count[N_BINS] = {0};
 
-        #pragma omp for collapse(2)
+        #pragma omp for
         for (int i = 0; i < num_points; i++) {
             for (int j = i + 1; j < num_points; j++) {
                 // Calculate squared distance
@@ -65,8 +64,8 @@ int main(int argc, char *argv[]) {
                 int dz = points[i].z - points[j].z;
 
                 int dist_sq = dx * dx + dy * dy + dz * dz;
-                // Compute the distance index (not taking square root)
-                int dist_index = round(sqrtf(dist_sq) / SCALE_FACTOR * PRECISION);
+                // Compute the distance index (do not take the square root)
+                int dist_index = (int)(sqrtf(dist_sq) / SCALE_FACTOR * PRECISION); // Correctly cast to int
                 
                 if (dist_index < N_BINS) {
                     local_distance_count[dist_index]++;
@@ -86,3 +85,4 @@ int main(int argc, char *argv[]) {
     print_result(distance_count);
     return 0;
 }
+
