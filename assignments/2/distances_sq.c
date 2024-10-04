@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     num_threads = atoi(argv[1] + 2); // pointer to *argv + 2, skip -t
     omp_set_num_threads(num_threads);
     Point points[CHUNK_SIZE];
-    int distance_count[N_BINS] = {0};
+    int global_distance_count[N_BINS] = {0};
     int bins[N_BINS] = {0};
     int sq_bins[N_BINS] = {0};
     compute_sq_bins(sq_bins);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     // Parallel construct that applies parallelism across nested loops.
     #pragma omp parallel
     {
-        // Local distance count for each thread
+        // Distance count for each thread
         int local_distance_count[N_BINS] = {0};
         #pragma omp for collapse(2)
         for (int i = 0; i < num_points; i++) {
@@ -92,10 +92,10 @@ int main(int argc, char *argv[]) {
         #pragma omp critical
         {
             for (int i = 0; i < N_BINS; i++) {
-                distance_count[i] += local_distance_count[i];
+                global_distance_count[i] += local_distance_count[i];
             }
         }
     }
-    print_result(distance_count, sq_bins);
+    print_result(global_distance_count, sq_bins);
     return 0;
 }
