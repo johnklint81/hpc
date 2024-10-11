@@ -62,14 +62,15 @@ int main(int argc, char *argv[]) {
       // Local distance count for each thread
       int local_distance_count[N_BINS] = {0};
       // Removing collapse(2) made it fast enough to pass.
-      #pragma omp for
-      for (int i = 0; i < num_points; i++) {
+      // adding simd made it faster!  
+      #pragma omp for simd collapse(2)
+      for (long int i = 0; i < num_points; i++) {
         // No change here
-        int tmp_point_x = points[i].x;
-        int tmp_point_y = points[i].y;
-        int tmp_point_z = points[i].z;
-        for (int j = i + 1; j < num_points; j++) {
+        for (long int j = i + 1; j < num_points; j++) {
 
+          int tmp_point_x = points[i].x;
+          int tmp_point_y = points[i].y;
+          int tmp_point_z = points[i].z;
           int dx = tmp_point_x - points[j].x;
           int dy = tmp_point_y - points[j].y;
           int dz = tmp_point_z - points[j].z;
