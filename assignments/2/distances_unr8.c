@@ -8,7 +8,7 @@
 #define N_BINS 3465 // Max distance is sqrt( 3 * [10-(-10)]^2) = 34.641
 #define SCALE_FACTOR 1000
 #define PRECISION 100 // For fixed-point representation (2 decimal places) 
-#define UNROLL_FACTOR 4
+#define UNROLL_FACTOR 8
 
 // Struct to store 3D points
 typedef struct {
@@ -62,7 +62,8 @@ int main(int argc, char *argv[]) {
     int local_distance_count[N_BINS] = {0};
     #pragma omp for
     for (int i = 0; i < num_points; i++) {
-      for (int j = i + 1; j + UNROLL_FACTOR - 1 < num_points - remainder; j += UNROLL_FACTOR) {
+      for (int j = i + 1; j + UNROLL_FACTOR - 1 < num_points - remainder;
+      j += UNROLL_FACTOR) {
         
         int dx1 = points[i].x - points[j].x;
         int dy1 = points[i].y - points[j].y;
@@ -80,20 +81,51 @@ int main(int argc, char *argv[]) {
         int dy4 = points[i].y - points[j + 3].y;
         int dz4 = points[i].z - points[j + 3].z;
 
+        int dx5 = points[i].x - points[j + 4].x;
+        int dy5 = points[i].y - points[j + 4].y;
+        int dz5 = points[i].z - points[j + 4].z;
+
+        int dx6 = points[i].x - points[j + 5].x;
+        int dy6 = points[i].y - points[j + 5].y;
+        int dz6 = points[i].z - points[j + 5].z;
+
+        int dx7 = points[i].x - points[j + 6].x;
+        int dy7 = points[i].y - points[j + 6].y;
+        int dz7 = points[i].z - points[j + 6].z;
+
+        int dx8 = points[i].x - points[j + 7].x;
+        int dy8 = points[i].y - points[j + 7].y;
+        int dz8 = points[i].z - points[j + 7].z;
+
+
         int dist_sq1 = dx1 * dx1 + dy1 * dy1 + dz1 * dz1;
         int dist_sq2 = dx2 * dx2 + dy2 * dy2 + dz2 * dz2;
         int dist_sq3 = dx3 * dx3 + dy3 * dy3 + dz3 * dz3;
         int dist_sq4 = dx4 * dx4 + dy4 * dy4 + dz4 * dz4;
+        int dist_sq5 = dx5 * dx5 + dy5 * dy5 + dz5 * dz5;
+        int dist_sq6 = dx6 * dx6 + dy6 * dy6 + dz6 * dz6;
+        int dist_sq7 = dx7 * dx7 + dy7 * dy7 + dz7 * dz7;
+        int dist_sq8 = dx8 * dx8 + dy8 * dy8 + dz8 * dz8;
+
 
         int dist_index1 = (int)(sqrtf(dist_sq1) / SCALE_FACTOR * PRECISION);
         int dist_index2 = (int)(sqrtf(dist_sq2) / SCALE_FACTOR * PRECISION);  
         int dist_index3 = (int)(sqrtf(dist_sq3) / SCALE_FACTOR * PRECISION);  
         int dist_index4 = (int)(sqrtf(dist_sq4) / SCALE_FACTOR * PRECISION);  
+        int dist_index5 = (int)(sqrtf(dist_sq5) / SCALE_FACTOR * PRECISION);
+        int dist_index6 = (int)(sqrtf(dist_sq6) / SCALE_FACTOR * PRECISION);  
+        int dist_index7 = (int)(sqrtf(dist_sq7) / SCALE_FACTOR * PRECISION);  
+        int dist_index8 = (int)(sqrtf(dist_sq8) / SCALE_FACTOR * PRECISION);  
 
         local_distance_count[dist_index1]++;
         local_distance_count[dist_index2]++;
         local_distance_count[dist_index3]++;
         local_distance_count[dist_index4]++;
+        local_distance_count[dist_index5]++;
+        local_distance_count[dist_index6]++;
+        local_distance_count[dist_index7]++;
+        local_distance_count[dist_index8]++;
+
       }
       
       // Handle remainder points
@@ -120,4 +152,5 @@ int main(int argc, char *argv[]) {
   print_result(global_distance_count);
   return 0;
 }
+
 

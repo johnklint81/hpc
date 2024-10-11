@@ -10,11 +10,8 @@
 #define SCALE_FACTOR 1000
 #define MAX_DIST_SQ 1200
 #define MAX_DIST_SQ_SCALED (MAX_DIST_SQ * SCALE_FACTOR * SCALE_FACTOR)
-#define BIN_WIDTH (MAX_DIST_SQ_SCALED / N_BINS) // rounding errors? use float
+#define BIN_WIDTH (MAX_DIST_SQ_SCALED / N_BINS)
 #define PRECISION 100 // For fixed-point representation (2 decimal places) 
-
-
-
 
 // Structure to store 3D points
 typedef struct {
@@ -78,12 +75,9 @@ int main(int argc, char *argv[]) {
                 int dx = points[i].x - points[j].x;
                 int dy = points[i].y - points[j].y;
                 int dz = points[i].z - points[j].z;
-                // Bin widths are NOT the same for squared histogram
-                // They should be squared maybe??
                 int dist_sq = dx * dx + dy * dy + dz * dz;
 
                 // Compute the distance index
-                // Run on 10 cell data and check output. Use floats?
                 int dist_index = (int)(dist_sq / BIN_WIDTH);
 
                 // Ensure dist_index is within bounds

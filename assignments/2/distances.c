@@ -11,6 +11,10 @@
 
 // Struct to store 3D points
 // Buffering for cache lines did not work, without 2.2 s, with 2.5 s
+// Read in chunks so that each chunk fits into L
+// Read two chunks, compare distances of all points in one chunk to other chunk, 
+// move to next chunk, repeat like for a single point. If all chunks and resulting 
+// values fit into cache, --> speedup!
 typedef struct {
   short int x;
   //char buf1[62];
