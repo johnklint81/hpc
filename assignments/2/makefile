@@ -1,7 +1,7 @@
 .PHONY : all
 all : distances
 
-distances: distances.c
+distances : distances.c
 	gcc -O2 -fopenmp -o distances distances.c -lm
 
 clean:
