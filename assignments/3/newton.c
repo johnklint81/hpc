@@ -8,7 +8,7 @@
 
 #define MAX_ITER 50
 
-double newton(double complex x0, int degree) {
+double complex newton(double complex x0, int degree) {
   double complex f = cpow(x0, degree) - 1;
   double complex fprime = degree * cpow(x0, degree - 1); 
   double complex x1 = x0 - f / fprime;
@@ -35,12 +35,11 @@ int main(int argc, char *argv[]) {
   bool iterating = true;
   int iter = 0;
   double complex xnew;
- // double complex xold = -3.0 + 1.0 * I;
-  double complex xold = 4.0;
+  double complex xold = -3.0 + 1.0 * I;
 
 
   while (iterating && iter < MAX_ITER) {
-  xnew = newton(xold, degree);
+    xnew = newton(xold, degree);
     if (cabs(xnew - xold) < 0.001) {
       iterating = false;
     }
